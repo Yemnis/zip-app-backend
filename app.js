@@ -18,9 +18,30 @@ var corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
 };
 
+//DDos Protection. requestLimit can be adjusted from 50 to any other number.
+const requestLimit = 50;
+const timeLimit = 60000;
+let requestTimestamps = [];
+
+// Define a middleware function to limit the number of requests. This has been tested and it works
+const limitRequests = (req, res, next) => {
+  const currentTime = new Date().getTime();
+
+  // Remove timestamps older than 1 minute
+  requestTimestamps = requestTimestamps.filter(timestamp => currentTime - timestamp < timeLimit);
+
+  // If the number of requests in the last minute is less than the limit, allow the request
+  if (requestTimestamps.length < requestLimit) {
+    requestTimestamps.push(currentTime);
+    next();
+  } else {
+    return res.status(429).send("Stop Spamming Pls Lol");
+  }
+};
+
 
 // Route for zipping a file
-app.post('/', cors(corsOptions), upload.single('file'), async (req, res) => {
+app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (req, res) => {
   try {
     const file = req.file; // Use req.file instead of req.body.file
     if (!file) {
@@ -51,7 +72,7 @@ app.post('/', cors(corsOptions), upload.single('file'), async (req, res) => {
 });
 
 // Route for downloading the zipped file
-app.get('/output.zip', cors(corsOptions), async (req, res) => {
+app.get('/output.zip', limitRequests, cors(corsOptions), async (req, res) => {
   const zipPath = `${__dirname}/output.zip`;
   res.download(zipPath, (err) => {
     if (!err) {
