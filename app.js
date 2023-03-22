@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const archiver = require('archiver');
-const multer = require('multer'); // Added multer for handling multipart/form-data
+const multer = require('multer'); 
 
 const app = express();
 app.use(cors());
@@ -13,12 +13,12 @@ const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage: storage });
 
 var corsOptions = {
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST'], // Allow GET and POST methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+  origin: '*', 
+  methods: ['GET', 'POST'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 
-//DDos Protection. requestLimit can be adjusted from 50 to any other number.
+//DDos Protection middleware below. the requestLimit const can be adjusted from 50 to any other number.
 const requestLimit = 50;
 const timeLimit = 60000;
 let requestTimestamps = [];
@@ -49,13 +49,13 @@ app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (re
     }
 
     const tempFilePath = `${__dirname}/temp-file`;
-    fs.writeFileSync(tempFilePath, file.buffer); // Use file.buffer instead of fileData
+    fs.writeFileSync(tempFilePath, file.buffer); 
 
     const output = fs.createWriteStream(`${__dirname}/output.zip`);
     const archive = archiver('zip');
 
     archive.pipe(output);
-    archive.file(tempFilePath, { name: file.originalname }) // Use archive.file() instead of archive.directory()
+    archive.file(tempFilePath, { name: file.originalname })
     .finalize();
 
     output.on('close', () => {
@@ -83,7 +83,6 @@ app.get('/output.zip', limitRequests, cors(corsOptions), async (req, res) => {
 });
 
 
-// Start the server
 app.listen(6060, () => {
   console.log('Server started on port 6060');
 });
