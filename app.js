@@ -19,6 +19,7 @@ var corsOptions = {
 };
 
 //DDos Protection middleware below. the requestLimit const can be adjusted from 50 to any other number.
+//Clamscan can also be used to create a new middleware that will check for malicious files. For more info check:https://www.npmjs.com/package/clamscan
 const requestLimit = 50;
 const timeLimit = 60000;
 let requestTimestamps = [];
