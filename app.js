@@ -53,7 +53,9 @@ app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (re
     fs.writeFileSync(tempFilePath, file.buffer); 
 
     const output = fs.createWriteStream(`${__dirname}/output.zip`);
-    const archive = archiver('zip');
+    const archive = archiver('zip', {
+      zlib: { level: 9 }, // Set the compression level to maximum (9)
+    });
 
     archive.pipe(output);
     archive.file(tempFilePath, { name: file.originalname })
@@ -72,12 +74,13 @@ app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (re
   }
 });
 
+
 // Route for downloading the zipped file
 app.get('/output.zip', limitRequests, cors(corsOptions), async (req, res) => {
   const zipPath = `${__dirname}/output.zip`;
   res.download(zipPath, (err) => {
     if (!err) {
-      // Delete the zip file after sending it
+      
       fs.unlinkSync(zipPath);
     }
   });
