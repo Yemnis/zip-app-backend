@@ -74,7 +74,6 @@ app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (re
   }
 });
 
-
 // Route for downloading the zipped file
 app.get('/output/:filename', limitRequests, cors(corsOptions), async (req, res) => {
   const compressedFilename = req.params.filename;
