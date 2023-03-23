@@ -62,7 +62,7 @@ app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (re
     .finalize();
 
     output.on('close', () => {
-      const downloadUrl = `http://localhost:6060/output.zip`;
+      const downloadUrl = `http://localhost:6060/output/${encodeURIComponent(file.originalname)}-compressed.zip`;
       res.json({ downloadUrl }); // Return the JSON containing the download URL
 
       // Delete the temporary file
@@ -78,6 +78,7 @@ app.post('/', cors(corsOptions), limitRequests, upload.single('file'), async (re
 // Route for downloading the zipped file
 app.get('/output/:filename', limitRequests, cors(corsOptions), async (req, res) => {
   const compressedFilename = req.params.filename;
+  //keep the original name of the file and add -compressed.zip
   const originalFilename = decodeURIComponent(compressedFilename).replace('-compressed.zip', '');
   const zipPath = `${__dirname}/output.zip`;
 
