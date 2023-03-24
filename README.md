@@ -18,10 +18,8 @@ This API allows users to upload a file, zip it on the server, and download the z
 
 
 ## Running the API locally
-
-1. Create a file named `app.js` in your project directory and copy the provided code into it.
-2. In your terminal, navigate to the project directory and run the following command to start the server: `node app.js`
-3. The server will start on port 6060, and you should see the message "Server started on port 6060" in your terminal.
+1. In your terminal, navigate to the project directory and run the following command to start the server: `node app.js`
+2. The server will start on port 6060, and you should see the message "Server started on port 6060" in your terminal.
 
 ## API Endpoints
 
