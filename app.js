@@ -24,7 +24,7 @@ const requestLimit = 50;
 const timeLimit = 60000;
 let requestTimestamps = [];
 
-// Define a middleware function to limit the number of requests. This has been tested and it works
+// Middleware function to limit the number of requests. This has been tested and it works
 const limitRequests = (req, res, next) => {
   const currentTime = new Date().getTime();
 
