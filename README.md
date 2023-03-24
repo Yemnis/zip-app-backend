@@ -14,8 +14,7 @@ This API allows users to upload a file, zip it on the server, and download the z
 
 ## Installation
 
-1. Create a new directory for your project, navigate to it, and run `npm init -y` to generate a `package.json` file.
-2. Install the required dependencies with: `npm install express cors fs archiver multer --save`
+1. Install the required dependencies with: `npm install express cors fs archiver multer --save`
 
 
 ## Running the API locally
