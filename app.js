@@ -88,8 +88,6 @@ app.get('/output/:filename', limitRequests, cors(corsOptions), async (req, res) 
   });
 });
 
-
-
 app.listen(6060, () => {
   console.log('Server started on port 6060');
 });

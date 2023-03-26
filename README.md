@@ -26,7 +26,7 @@ This API allows users to upload a file, zip it on the server, and download the z
 - POST `/`: Upload and zip a file
 - Accepts a `multipart/form-data` request containing a single file with the key "file".
 - Returns a JSON object containing the download URL for the zipped file.
-- GET `/output.zip`: Download the zipped file
+- GET `/output/:filename`: Download the zipped file
 
 ## How it works
 
